@@ -1,3 +1,63 @@
+  :root {
+    --violet-web: #F68EEA;
+    --imperial-red: #FF0A3B;
+    --sea-green: #17C3B2;
+    --bluetiful: #4B72E7;
+    --black: #000000;
+    --white: #FFFFFF;
+  }
+  
+  header {
+    height: 30vh;
+  }
+
+  
+
+  #heading,
+  h3 {
+    color: var(--white);
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+  }
+
+  #inputDiv {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+  }
+
+  #wordInput {
+    display: block;
+    background: var(--black);
+    border: 2px solid var(--violet-web);
+    border-radius: 5px;
+    color: var(--white);
+    padding: 10px;
+  }
+
+  body {
+    background-image: url("../images/daniel-sandvik-18B9D4q9ESE-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  #btnDiv {
+    height: 65vh;
+    position: relative;
+  }
+  
+  #btn {
+    position: absolute;
+    left: 45%;
+    bottom: 0;
+    background-image: url(../images/alexander-shatov-qt7S2QuAhJI-unsplash.jpg);
+    background-size: cover;
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+  }
 
   img {
     width: 100%;
