@@ -1,9 +1,26 @@
-html {
-    height: 100%;
+
+  img {
+    width: 100%;
+    height: auto;
   }
-  
-  body {
-    min-height: 100%;
-    line-height: 1;
-    font-family: sans-serif;
+  .card-column{
+    border:solid;
+    margin: 30px 30px;
+    width: 50%;
+    border-radius: 1px; 
   }
+  .card-column:hover{
+    box-shadow: 5px 0px 8px  rgb(106, 157, 190),  0 0 8px  rgb(106, 157, 190) ;
+
+  }
+  .artist-name{
+    padding: 10px;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.801); 
+    font-size: 20px;
+  }
+  .song-name{
+    padding: 10px;
+    font-size: 16px;
+    color: rgba(128, 128, 128, 0.918);
+  }
+  /*all colors just for demo*/
