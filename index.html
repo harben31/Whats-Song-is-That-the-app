@@ -13,30 +13,39 @@
         <h1 id="heading">
             Search by LYRICS
         </h1>
-         <h3>
+        <h3>
                 Type a few words from a song you want to find
         </h3>
         <div id="inputDiv">
             <input id="wordInput" type="text" size="40" placeholder="lyrics go here"/>
             <button id="btn"></button>
+            
+            <!--Modal-->
+            <!--+++++This button just for demo after ststing the functionality of the modal box we need to connect the modal box to the search button++++-->
+            <button class="trigger">This button just for demo!</button>
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <header class="modal-header">
+                       Ooops!
+                       <span class="close-button">&times;</span>
+                    </header>
+                    <div class="error-message">
+                       <p>Sorry we couldn't find the matches to what you entered!</p>
+                    </div>
+              </div>
+            </div>
         </div>
     </header>
-
+   
     <main>
         
         <!-- unordered list contains the songs cards-->
         <!-- add id to ul /bh -->
         <ul id="card-row" class="row">
             <!--these cards for the design only, we will generate them from the javascript later on-->
-            
-            
-
-        </ul>
-        
-        
-
+        </ul>   
     </main>
-
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
