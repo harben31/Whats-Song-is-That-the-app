@@ -48,7 +48,7 @@ let callFn = function(input){
             headers:{
                 //---------!!this code is only good for a few hours!!-------------
                 //---------post? client id: client secret to spotify and they send back bearer number?
-                Authorization: "Bearer BQCkmpHuZ9koLteAdMvOc2JF9jcWxEFw8M-VSKsIQ7DpX_qKmMLY4Zf4xDgrQtNAoguL604pXGWWyXO8FGHl2CrwnLMjHu7Y1GkZhaPCMVo0Hj74AjoeByrcdNj9zdm7ztT7-PGAGeK-Xg"
+                Authorization: "Bearer BQA30tk-P1_Uks63qCpipu6H6mQNzQv-SoZ3yFHlp00-InyRTf9Fdchu3mXdJE4ydPLY2ZIW_tgPUe6rmhYwI6_EU5H0Q6zxIDxr4_jbbbIGCfLF8k13rcbWbXfh8HbErh-4Cpg45ZBfKg"
             }
         })
         .then(function(result){
@@ -66,7 +66,7 @@ let callFn = function(input){
                 let cardPicA = document.createElement("a");
                 let cardPic = document.createElement("img");
 
-                cardWrap.setAttribute("class", "card-column");
+                cardWrap.setAttribute("class", "card");
                 cardArtist.setAttribute("class", "artist-name");
                 cardTitle.setAttribute("class", "song-name");
                 // cardPicA.setAttribute("class", "");
