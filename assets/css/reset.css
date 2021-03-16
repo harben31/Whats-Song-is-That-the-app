@@ -35,6 +35,25 @@ button
   font-family: inherit;
 }
 
-ul {
-  list-style: none;
+#card-row {
+  display: flex;
+  flex-wrap: wrap;
+  list-style:none;
+  justify-content: center;
+ 
+  
+
+}
+.card {
+  border: 3px solid var(--violet-web);
+  border-radius: 10px;
+  width: 20%;
+  height: 10em;
+  background-color: darkturquoise;
+  opacity: .5;
+  margin: 1em;
+  text-align: center;
+  min-width: 15em;
+
+
 }
