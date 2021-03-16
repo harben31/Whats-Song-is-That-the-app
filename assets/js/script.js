@@ -65,6 +65,9 @@ let callFn = function(input){
             }
         })
         .then(function(result){
+            if(result.status===401){
+                authFn();
+            }
             return result.json();
         })
         .then(function(data){
