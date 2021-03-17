@@ -8,6 +8,7 @@ const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
 
+let saveCard = [];
 
 // variables declared and given value for no promise returned modal
 const modal = document.querySelector(".modal");
@@ -111,7 +112,25 @@ const cardPrint = function(){
         cardDivClass.appendChild(cardWrap);
         
     }
+
+
+    
+    //------save the cards to the local storage
+    saveCard.push(cardWrap)
+    console.log(saveCard);
+    localStorage.setItem("cardsSearchList", JSON.stringify(saveCard));   
 }
+var cardsSearchList = JSON.parse(localStorage.getItem("cardsSearchList"));
+console.log(cardsSearchList);
+
+for (var i = 0; i < cardsSearchList.length; i++){
+    var history = '<li>' + cardsSearchList[i] + '</li>';
+    console.log(history);
+    cardDivClass.append(history);
+}
+
+
+
 
 // -----------------api call functionality-------------
 let callFn = function(input){

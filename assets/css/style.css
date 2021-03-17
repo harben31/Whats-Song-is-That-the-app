@@ -9,10 +9,6 @@
   --blue1:#acd6f8e5;
   --blue2: #4eadfae5;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> a12820c832bf85a4d165045bc49d4982700cdf81
   /* ---------log in modal style----------- */
   #introModal{
     background-color: rgba(0, 0, 0, 0.5);
@@ -152,7 +148,7 @@ body {
 }
 /*Styling the header of the modal*/
 .modal-header{
-  height: 4vh;
+  height: 5vh;
   width: 100%;
   background-color:var(--blue1);
   border-radius: 0.5rem;
@@ -188,7 +184,8 @@ body {
 /*Cards Style*/
 img {
   width: 100%;
-  height: auto;
+  height: 200px;
+  border-radius: 6px;
 }
 
 .card-column{
@@ -214,37 +211,6 @@ img {
   padding: 10px;
 }
 
-<<<<<<< HEAD
-  }
-  .artist-name{
-    padding: 10px;
-    border-bottom: 2px solid rgba(128, 128, 128, 0.801); 
-    font-size: 20px;
-  }
-  .song-name{
-    color: rgba(128, 128, 128, 0.918);
-    font-size: 16px;
-    padding: 10px;
-  }
-
-  #logoWrap{
-    color: var(--white);
-    display: flex;
-    font-size: .8rem;
-    justify-content: center;
-    position:relative;
-    z-index: -1;
-  }
-
-  .footerLogo{
-    height: 40px;
-    margin: 15px 10px;
-    width:auto;
-  }
-
-
-  /*all colors just for demo*/
-=======
 #logoWrap{
   color: var(--white);
   display: flex;
@@ -273,4 +239,3 @@ img {
 }
   
 
->>>>>>> a12820c832bf85a4d165045bc49d4982700cdf81
