@@ -8,7 +8,23 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>What's the Song?</title>
 </head>
+
+<!-- -------beginning log-in modal-------- -->
 <body>
+    <div id="introModal">
+        <div id="introModalContent">
+            <div id="introModalHeaderWrap">
+                <div id="introModalTextWrap">
+                    <h3 id="introModalBanner">welcome to: <i>What-Song-is-That?</i> the app.</h3>
+                    <h4>please log into your Spotify account to continue.</h4>
+                </div>
+                <span id="introCloseBtn">&times;</span>
+            </div>
+            <button id="authLinkBtn">log in</button>
+            <img id="introModalLogo" src="./assets/images/spotify-icons-logos/logos/01_RGB/02_PNG/Spotify_Logo_RGB_Green.png" alt="Spotify Logo">
+        </div>
+    </div>
+
     <header>
         <h1 id="heading">
             Search by LYRICS
@@ -42,8 +58,22 @@
         <!-- unordered list contains the songs cards-->
         <!-- add id to ul /bh -->
         <ul id="card-row" class="row">
+
+            <!--cards go here and are generated in js-->
+
+        </ul>
+        
+        <!-- giving propper credit -->
+        <footer id="logoWrap">
+            <p>powered by:</p>
+            <img class="footerLogo" src="./assets/images/spotify-icons-logos/logos/01_RGB/02_PNG/Spotify_Logo_RGB_Green.png" alt="spoitfy icon">
+            <img id="mmLogo" class="footerLogo" src="./assets/images/mxm-logo.svg" alt="">
+        </footer>
+
+=======
             <!--these cards for the design only, we will generate them from the javascript later on-->
         </ul>   
+
     </main>
     <script src="./assets/js/script.js"></script>
 </body>

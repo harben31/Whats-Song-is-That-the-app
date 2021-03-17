@@ -1,11 +1,13 @@
+const introModal = document.querySelector("#introModal");
+const introModalContent = document.querySelector("#introModalContent");
+const introCloseBtn = document.querySelector("#introCloseBtn");
+const authLinkBtn = document.querySelector("#authLinkBtn");
+
 const searchInput = document.querySelector("#wordInput");
 const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
-// const cardTitleClass = document.querySelectorAll("#");
-// const cardAlbumClass = document.querySelectorAll("#");
-// const cardUrlClass = document.querySelectorAll("#");
-// const cardPicClass = document.querySelectorAll("#");
+
 const modal = document.querySelector(".modal");
 const trigger = document.querySelector(".trigger");
 const closeButton = document.querySelector(".close-button");
@@ -32,15 +34,38 @@ let wordFn = function(word){
     return wordTwo
 }
 
+// --------------spotify log in redirect---------------
 const authFn = function(){
     window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=http://127.0.0.1:5500/index.html";
     return
 };
 
-console.log(window.location.hash.substr(1).split("="));
+// ------------------modal/log in functionality-----------------
+introModal.addEventListener("click", function(event){
+    if(event.target === authLinkBtn){
+        //bug on reload page starts over and modal is back...
+        introModal.setAttribute("style", "display: none");
+        introModalContent.setAttribute("style", "display:none");
+        authFn();
+    } else if (event.target === introCloseBtn){
+        introModal.setAttribute("style", "display: none");
+        introModalContent.setAttribute("style", "display:none");
+    }
+    
+});
+
+//-------if you have a token it will not show you the modal--------------
+if(window.location.hash){
+    introModal.setAttribute("style", "display: none");
+    introModalContent.setAttribute("style", "display:none");
+    console.log(window.location.hash)
+}
+
+// ------------parsing hash fragment & defining bearer token------------
+// console.log(window.location.hash.substr(1).split("="));
 const hashParce = window.location.hash.substr(1).split("=");
 const hashToken = hashParce[1];
-console.log(hashToken);
+// console.log(hashToken);
 
 function toggleModal() {
     modal.classList.toggle("show-modal");
@@ -57,7 +82,7 @@ closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
-
+// -----------------api call functionality-------------
 let callFn = function(input){
     let inputClean = input.trim("").replaceAll(" ", "+");
 
@@ -69,6 +94,7 @@ let callFn = function(input){
     })
     .then(function(data){
         console.log(data)
+
         console.log(data.message.body.track_list[0]);
         if (data.message.body.track_list[0]) {
             const mmReturn = data.message.body.track_list[0].track.track_name;
@@ -107,6 +133,7 @@ let callFn = function(input){
                     // cardPicA.setAttribute("class", "");
                     cardPicA.setAttribute("href", tracksList[index].external_urls.spotify);
                     cardPic.setAttribute("class", "album-cover");
+
                 
                     cardArtist.textContent = tracksList[index].artists[0].name;
                     console.log(tracksList[index].artists[0].name)
@@ -129,7 +156,7 @@ let callFn = function(input){
 })
 }
 
-console.log(searchBtn);
+// ----------search button functionality----------------
 searchBtn.addEventListener("click", function(){
     callFn(searchInput.value);
     searchInput.value = "";
