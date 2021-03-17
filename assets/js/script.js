@@ -69,7 +69,6 @@ let callFn = function(input){
     })
     .then(function(data){
         console.log(data)
-        console.log(data.message.body.track_list);
         if (data.message.body.track_list[0]) {
             const mmReturn = data.message.body.track_list[0].track.track_name;
         
