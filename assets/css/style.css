@@ -18,13 +18,15 @@
     color: var(--white);
     text-align: center;
     padding: 10px;
-    margin: 5px;
+    margin: 10px;
   }
 
   #inputDiv {
     display: flex;
     justify-content: center;
     margin: 15px;
+    
+   
   }
 
   #wordInput {
@@ -34,6 +36,8 @@
     border-radius: 10px;
     color: var(--white);
     padding: 10px;
+  
+    
   }
 
   body {
@@ -57,15 +61,68 @@
     background-image: url(../images/alexander-shatov-qt7S2QuAhJI-unsplash.jpg);
     background-size: cover;
     border-radius: 10px;
-    margin-left: 15px;
+    margin-left: 30px;
     width: 50px;
     height: 50px;
   }
+/* Dropdown Button */
+.dropdown {
+  background-color: black;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid var(--violet-web);
+  border-radius: 10px;  
+  margin-left: 30px;
+ 
 
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: var(--violet-web);
+  
+}
+.dropbtn {
+  background-color: black;
+  color: white;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--bluetiful);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color:var(--violet-web);}
+
+
+
+.show {display:block;}
   img {
     width: 100%;
     height: auto;
   }
+
   .card-column{
     border:solid;
     margin: 30px 30px;
@@ -86,4 +143,22 @@
     font-size: 16px;
     color: rgba(128, 128, 128, 0.918);
   }
-  /*all colors just for demo*/
+  
+  #card-row {
+    display: flex;
+    flex-wrap: wrap;
+    list-style:none;
+    justify-content: center;
+   }
+  
+   .card {
+    border: 3px solid var(--violet-web);
+    border-radius: 10px;
+    width: 20%;
+    min-height: 10em;
+    background-color: darkturquoise;
+    opacity: .5;
+    margin: 1em;
+    text-align: center;
+    min-width: 15em;
+   }
