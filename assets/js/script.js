@@ -8,8 +8,9 @@ const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
 
+// variables declared and given value for no promise returned modal
 const modal = document.querySelector(".modal");
-const trigger = document.querySelector(".trigger");
+// const trigger = document.querySelector(".trigger");
 const closeButton = document.querySelector(".close-button");
 
 
@@ -67,17 +68,20 @@ const hashParce = window.location.hash.substr(1).split("=");
 const hashToken = hashParce[1];
 // console.log(hashToken);
 
+// makes modal toggle between being hidden or shown
 function toggleModal() {
     modal.classList.toggle("show-modal");
 }
 
+// when click on the window instead of modal, the toggle function is called to make modal hidden
 function windowOnClick(event) {
     if (event.target === modal) {
         toggleModal();
     }
 }
 
-trigger.addEventListener("click", toggleModal);
+// checks to see where the user clicks and calls functions appropriately to 
+// trigger.addEventListener("click", toggleModal);
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 // console.log(authFn());
@@ -95,7 +99,7 @@ let callFn = function(input){
     .then(function(data){
         console.log(data)
 
-        console.log(data.message.body.track_list[0]);
+        // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
         if (data.message.body.track_list[0]) {
             const mmReturn = data.message.body.track_list[0].track.track_name;
         
