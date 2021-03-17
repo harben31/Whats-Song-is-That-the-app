@@ -52,9 +52,9 @@ function windowOnClick(event) {
     }
 }
 
-// trigger.addEventListener("click", toggleModal);
-// closeButton.addEventListener("click", toggleModal);
-// window.addEventListener("click", windowOnClick);
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
 
@@ -69,8 +69,8 @@ let callFn = function(input){
     })
     .then(function(data){
         console.log(data)
-        
-        if (data.message.body.track_list[0].track.track_name) {
+        console.log(data.message.body.track_list);
+        if (data.message.body.track_list[0]) {
             const mmReturn = data.message.body.track_list[0].track.track_name;
         
             const mmReturnTrimmed = wordFn(mmReturn);
