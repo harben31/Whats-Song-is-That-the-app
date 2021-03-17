@@ -8,6 +8,7 @@ const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
 
+
 // variables declared and given value for no promise returned modal
 const modal = document.querySelector(".modal");
 // const trigger = document.querySelector(".trigger");
@@ -86,6 +87,32 @@ closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
+
+// --------printing card elements----------
+const cardPrint = function(){
+
+    for (let i = 0; i < 5; i++) {
+        cardWrap = document.createElement("li");
+        cardArtist = document.createElement("h3");
+        cardTitle = document.createElement("p");
+        cardPicA = document.createElement("a");
+        cardPic = document.createElement("img");
+
+        cardWrap.setAttribute("class", "card");
+        cardArtist.setAttribute("class", "artist-name");
+        cardTitle.setAttribute("class", "song-name");
+        cardPic.setAttribute("class", "album-cover");
+        cardPicA.setAttribute("class", "song-url");
+
+        cardPicA.appendChild(cardPic);
+        cardWrap.appendChild(cardPicA);
+        cardWrap.appendChild(cardArtist);
+        cardWrap.appendChild(cardTitle);
+        cardDivClass.appendChild(cardWrap);
+        
+    }
+}
+
 // -----------------api call functionality-------------
 let callFn = function(input){
     let inputClean = input.trim("").replaceAll(" ", "+");
@@ -114,6 +141,7 @@ let callFn = function(input){
                 }
             })
             .then(function(result){
+                console.log(result.status);
                 if(result.status===401){
                     authFn();
                 }
@@ -121,47 +149,36 @@ let callFn = function(input){
             })
             .then(function(data){
             
-                //-------printing cards--------
+                //-------populating content onto cards--------
                 for (let index = 0; index < 5; index++) {
+                    const cardArtistClass = document.querySelectorAll(".artist-name");
+                    const cardTitleClass = document.querySelectorAll(".song-name");
+                    const cardPicAClass = document.querySelectorAll(".song-url");
+                    const cardPicClass = document.querySelectorAll(".album-cover");
+
                     const tracksList = data.tracks.items;
 
-                    let cardWrap = document.createElement("li");
-                    let cardArtist = document.createElement("h3");
-                    let cardTitle = document.createElement("p");
-                    let cardPicA = document.createElement("a");
-                    let cardPic = document.createElement("img");
-
-                    cardWrap.setAttribute("class", "card");
-                    cardArtist.setAttribute("class", "artist-name");
-                    cardTitle.setAttribute("class", "song-name");
-                    // cardPicA.setAttribute("class", "");
-                    cardPicA.setAttribute("href", tracksList[index].external_urls.spotify);
-                    cardPic.setAttribute("class", "album-cover");
-
-                
-                    cardArtist.textContent = tracksList[index].artists[0].name;
+                    cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                    cardArtistClass[index].textContent = tracksList[index].artists[0].name;
                     console.log(tracksList[index].artists[0].name)
-                    cardTitle.textContent = tracksList[index].name;
-                    cardPic.setAttribute("src", tracksList[index].album.images[0].url);
-                
-                    cardPicA.appendChild(cardPic);
-                    cardWrap.appendChild(cardPicA);
-                    cardWrap.appendChild(cardArtist);
-                    cardWrap.appendChild(cardTitle);
-                    cardDivClass.appendChild(cardWrap);
-                
+                    cardTitleClass[index].textContent = tracksList[index].name;
+                    cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
                 }
         }) 
 
-        
-    } else {
+        } else {
             toggleModal();
         }
-})
+    })
 }
 
 // ----------search button functionality----------------
+let cardSwitch = 0;
 searchBtn.addEventListener("click", function(){
+    if(cardSwitch===0){
+        cardPrint();
+        cardSwitch = 1;
+    }
     callFn(searchInput.value);
     searchInput.value = "";
 });
