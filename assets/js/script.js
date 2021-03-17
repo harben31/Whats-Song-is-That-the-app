@@ -8,6 +8,12 @@ const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
 
+// variables declared and given value for no promise returned modal
+const modal = document.querySelector(".modal");
+// const trigger = document.querySelector(".trigger");
+const closeButton = document.querySelector(".close-button");
+
+
 let cardWrap;
 let cardArtist;
 let cardTitle;
@@ -62,7 +68,22 @@ const hashParce = window.location.hash.substr(1).split("=");
 const hashToken = hashParce[1];
 // console.log(hashToken);
 
+// makes modal toggle between being hidden or shown
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
 
+// when click on the window instead of modal, the toggle function is called to make modal hidden
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+// checks to see where the user clicks and calls functions appropriately to 
+// trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
 // -----------------api call functionality-------------
@@ -77,53 +98,65 @@ let callFn = function(input){
     })
     .then(function(data){
         console.log(data)
-        const mmReturn = data.message.body.track_list[0].track.track_name;
-        const mmReturnTrimmed = wordFn(mmReturn);
-        console.log(mmReturnTrimmed);
-    
-        fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
-            headers:{
-                Authorization: "Bearer " + hashToken
-            }
-        })
-        .then(function(result){
-            if(result.status===401){
-                authFn();
-            }
-            return result.json();
-        })
-        .then(function(data){
 
-            //-------printing cards--------
-            for (let index = 0; index < 5; index++) {
-                const tracksList = data.tracks.items;
+        // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
+        if (data.message.body.track_list[0]) {
+            const mmReturn = data.message.body.track_list[0].track.track_name;
+        
+            const mmReturnTrimmed = wordFn(mmReturn);
+            console.log(mmReturnTrimmed);
+            
+            fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
+                headers:{
+                    //---------!!this code is only good for a few hours!!-------------
+                    //---------post? client id: client secret to spotify and they send back bearer number?
+                    Authorization: "Bearer " + hashToken
+                }
+            })
+            .then(function(result){
+                if(result.status===401){
+                    authFn();
+                }
+                return result.json();
+            })
+            .then(function(data){
+            
+                //-------printing cards--------
+                for (let index = 0; index < 5; index++) {
+                    const tracksList = data.tracks.items;
 
-                let cardWrap = document.createElement("li");
-                let cardArtist = document.createElement("h3");
-                let cardTitle = document.createElement("p");
-                let cardPicA = document.createElement("a");
-                let cardPic = document.createElement("img");
+                    let cardWrap = document.createElement("li");
+                    let cardArtist = document.createElement("h3");
+                    let cardTitle = document.createElement("p");
+                    let cardPicA = document.createElement("a");
+                    let cardPic = document.createElement("img");
 
-                cardWrap.setAttribute("class", "card");
-                cardArtist.setAttribute("class", "artist-name");
-                cardTitle.setAttribute("class", "song-name");
-                // cardPicA.setAttribute("class", "");
-                cardPicA.setAttribute("href", tracksList[index].external_urls.spotify);
-                cardPic.setAttribute("class", "album-cover");
+                    cardWrap.setAttribute("class", "card");
+                    cardArtist.setAttribute("class", "artist-name");
+                    cardTitle.setAttribute("class", "song-name");
+                    // cardPicA.setAttribute("class", "");
+                    cardPicA.setAttribute("href", tracksList[index].external_urls.spotify);
+                    cardPic.setAttribute("class", "album-cover");
+
                 
-                cardArtist.textContent = tracksList[index].artists[0].name;
-                console.log(tracksList[index].artists[0].name)
-                cardTitle.textContent = tracksList[index].name;
-                cardPic.setAttribute("src", tracksList[index].album.images[0].url);
+                    cardArtist.textContent = tracksList[index].artists[0].name;
+                    console.log(tracksList[index].artists[0].name)
+                    cardTitle.textContent = tracksList[index].name;
+                    cardPic.setAttribute("src", tracksList[index].album.images[0].url);
                 
-                cardPicA.appendChild(cardPic);
-                cardWrap.appendChild(cardPicA);
-                cardWrap.appendChild(cardArtist);
-                cardWrap.appendChild(cardTitle);
-                cardDivClass.appendChild(cardWrap);
+                    cardPicA.appendChild(cardPic);
+                    cardWrap.appendChild(cardPicA);
+                    cardWrap.appendChild(cardArtist);
+                    cardWrap.appendChild(cardTitle);
+                    cardDivClass.appendChild(cardWrap);
                 
-            }
-    })
+                }
+        }) 
+
+        
+    } else {
+            toggleModal();
+        }
 })
 }
 
@@ -132,3 +165,5 @@ searchBtn.addEventListener("click", function(){
     callFn(searchInput.value);
     searchInput.value = "";
 });
+
+
