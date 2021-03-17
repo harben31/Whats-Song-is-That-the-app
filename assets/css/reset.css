@@ -50,7 +50,7 @@ button
   width: 20%;
   min-height: 10em;
   background-color: darkturquoise;
-  opacity: .5;
+  /* opacity: .5; */
   margin: 1em;
   text-align: center;
   min-width: 15em;

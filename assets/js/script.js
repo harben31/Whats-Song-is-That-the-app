@@ -1,11 +1,12 @@
+const introModal = document.querySelector("#introModal");
+const introModalContent = document.querySelector("#introModalContent");
+const introCloseBtn = document.querySelector("#introCloseBtn");
+const authLinkBtn = document.querySelector("#authLinkBtn");
+
 const searchInput = document.querySelector("#wordInput");
 const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
-// const cardTitleClass = document.querySelectorAll("#");
-// const cardAlbumClass = document.querySelectorAll("#");
-// const cardUrlClass = document.querySelectorAll("#");
-// const cardPicClass = document.querySelectorAll("#");
 
 let cardWrap;
 let cardArtist;
@@ -28,20 +29,43 @@ let wordFn = function(word){
     return wordTwo
 }
 
+// --------------spotify log in redirect---------------
 const authFn = function(){
     window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=http://127.0.0.1:5500/index.html";
     return
 };
 
-console.log(window.location.hash.substr(1).split("="));
+// ------------------modal/log in functionality-----------------
+introModal.addEventListener("click", function(event){
+    if(event.target === authLinkBtn){
+        //bug on reload page starts over and modal is back...
+        introModal.setAttribute("style", "display: none");
+        introModalContent.setAttribute("style", "display:none");
+        authFn();
+    } else if (event.target === introCloseBtn){
+        introModal.setAttribute("style", "display: none");
+        introModalContent.setAttribute("style", "display:none");
+    }
+    
+});
+
+//-------if you have a token it will not show you the modal--------------
+if(window.location.hash){
+    introModal.setAttribute("style", "display: none");
+    introModalContent.setAttribute("style", "display:none");
+    console.log(window.location.hash)
+}
+
+// ------------parsing hash fragment & defining bearer token------------
+// console.log(window.location.hash.substr(1).split("="));
 const hashParce = window.location.hash.substr(1).split("=");
 const hashToken = hashParce[1];
-console.log(hashToken);
+// console.log(hashToken);
 
 
 // console.log(authFn());
 
-
+// -----------------api call functionality-------------
 let callFn = function(input){
     let inputClean = input.trim("").replaceAll(" ", "+");
 
@@ -59,8 +83,6 @@ let callFn = function(input){
     
         fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
             headers:{
-                //---------!!this code is only good for a few hours!!-------------
-                //---------post? client id: client secret to spotify and they send back bearer number?
                 Authorization: "Bearer " + hashToken
             }
         })
@@ -105,7 +127,7 @@ let callFn = function(input){
 })
 }
 
-console.log(searchBtn);
+// ----------search button functionality----------------
 searchBtn.addEventListener("click", function(){
     callFn(searchInput.value);
     searchInput.value = "";

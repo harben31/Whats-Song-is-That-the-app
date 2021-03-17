@@ -6,3 +6,4 @@ token is good for 1 hour. if token timesout the app asks user to reauth at spoti
 
 cors need to be ???
 
+future functionality: add timer or some sort of alert when the token is about to expire
