@@ -9,6 +9,7 @@ const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
 
+let saveCard = [];
 
 // variables declared and given value for no promise returned modal
 const modal = document.querySelector(".modal");
@@ -140,11 +141,26 @@ const cardPrint = function(){
         cardDivClass.appendChild(cardWrap);
         
     }
+
+
+    
+    //------save the cards to the local storage
+    saveCard.push(cardWrap)
+    console.log(saveCard);
+    localStorage.setItem("cardsSearchList", JSON.stringify(saveCard));   
+}
+var cardsSearchList = JSON.parse(localStorage.getItem("cardsSearchList"));
+console.log(cardsSearchList);
+
+for (var i = 0; i < cardsSearchList.length; i++){
+    var history = '<li>' + cardsSearchList[i] + '</li>';
+    console.log(history);
+    cardDivClass.append(history);
 }
 //used to get text of drop down choice
 
 
-
+// cass_spotify
     // -----------------api call functionality-------------
     let callFn = function(input){
         let inputClean = input.trim("").replaceAll(" ", "+");
@@ -161,6 +177,44 @@ const cardPrint = function(){
             // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
             if (data.message.body.track_list[0]) {
                 const mmReturn = data.message.body.track_list[0].track.track_name;
+
+
+// -----------------api call functionality-------------
+let callFn = function(input){
+    let inputClean = input.trim("").replaceAll(" ", "+");
+
+    //--------------musixmatch---------------------
+    fetch("https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=" + inputClean + "&apikey=4f4a8e76e3dfd131ac3519dbb669eec6")
+    .then(function(result){
+        console.log(result.status)
+        return result.json();
+    })
+    .then(function(data){
+        console.log(data)
+
+        // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
+        if (data.message.body.track_list[0]) {
+            const mmReturn = data.message.body.track_list[0].track.track_name;
+        
+            const mmReturnTrimmed = wordFn(mmReturn);
+            console.log(mmReturnTrimmed);
+            
+            fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
+                headers:{
+                    //---------!!this code is only good for a few hours!!-------------
+                    //---------post? client id: client secret to spotify and they send back bearer number?
+                    Authorization: "Bearer " + hashToken
+                }
+            })
+            .then(function(result){
+                console.log(result.status);
+                if(result.status===401){
+                    authFn();
+                }
+                return result.json();
+            })
+            .then(function(data){
+
             
                 const mmReturnTrimmed = wordFn(mmReturn);
                 console.log(mmReturnTrimmed);
