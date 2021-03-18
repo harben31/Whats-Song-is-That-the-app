@@ -35,13 +35,7 @@ button
   font-family: inherit;
 }
 
-#card-row {
-  display: flex;
-  flex-wrap: wrap;
-  list-style:none;
-  justify-content: center;
- 
-  
+
 
 }
 .card {
@@ -56,4 +50,5 @@ button
   min-width: 15em;
 
 
-}
+
+
