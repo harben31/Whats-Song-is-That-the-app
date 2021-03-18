@@ -9,7 +9,6 @@
   --blue1:#acd6f8e5;
   --blue2: #4eadfae5;
 }
-
   /* ---------log in modal style----------- */
   #introModal{
     background-color: rgba(0, 0, 0, 0.5);
@@ -251,7 +250,7 @@ body {
 }
 /*Styling the header of the modal*/
 .modal-header{
-  height: 4vh;
+  height: 5vh;
   width: 100%;
   background-color:var(--blue1);
   border-radius: 0.5rem;
@@ -287,7 +286,8 @@ body {
 /*Cards Style*/
 img {
   width: 100%;
-  height: auto;
+  height: 200px;
+  border-radius: 6px;
 }
 
 .card-column{
