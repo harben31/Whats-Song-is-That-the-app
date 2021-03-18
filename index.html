@@ -35,13 +35,13 @@
         <div id="inputDiv">
             <input id="wordInput" type="text" size="40" placeholder="Choose Search Option"/>
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Search</button>
+                <button onclick="myFunction()" class="dropbtn">Search by...</button>
                 <div id="myDropdown" class="dropdown-content">
-                    <a onclick="dropMenu ('Lyrics')" href="#">Lyrics</a>
-                    <a onclick="dropMenu ('Artist')" href="#">Artist</a>
-                    <a onclick="dropMenu ('Song Title')" href="#">Song Title</a>
-                    <a onclick="dropMenu ('Album')" href="#">Album</a>
-            </div>
+                    <a onclick="dropMenu ('lyrics')" id="lyrics" value="lyrics" href="#">Lyrics</a>
+                    <a onclick="dropMenu ('artist')" id="artist" value="artist" href="#">Artist</a>
+                    <a onclick="dropMenu ('track')" id="track" value="track" href="#">Song Title</a>
+                    <a onclick="dropMenu ('album')" id="album" value="album" href="#">Album</a>
+                </div>
             </div>
             <button id="btn"></button>
             

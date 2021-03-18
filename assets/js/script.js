@@ -6,6 +6,7 @@ const authLinkBtn = document.querySelector("#authLinkBtn");
 const searchInput = document.querySelector("#wordInput");
 const searchBtn = document.querySelector("#btn");
 
+
 const cardDivClass = document.querySelector("#card-row");
 
 let saveCard = [];
@@ -36,6 +37,8 @@ let wordFn = function(word){
     console.log(wordTwo);
     return wordTwo
 }
+let spotifyInput = searchInput.value;
+var text;
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -53,12 +56,15 @@ function myFunction() {
           openDropdown.classList.remove('show');
         }
       }
-    }
+    } 
   }
   function dropMenu(choices){
+      console.log(choices);
      var wordInput = document.getElementById("wordInput")
     wordInput.placeholder = choices
-  }
+    text = document.getElementById(choices).getAttribute("value")
+    // spotifyAPI(spotifyInput, text);
+  } 
 
 // --------------spotify log in redirect---------------
 const authFn = function(){
@@ -151,8 +157,26 @@ for (var i = 0; i < cardsSearchList.length; i++){
     console.log(history);
     cardDivClass.append(history);
 }
+//used to get text of drop down choice
 
 
+// cass_spotify
+    // -----------------api call functionality-------------
+    let callFn = function(input){
+        let inputClean = input.trim("").replaceAll(" ", "+");
+
+        //--------------musixmatch---------------------
+        fetch("https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=" + inputClean + "&apikey=4f4a8e76e3dfd131ac3519dbb669eec6")
+        .then(function(result){
+            console.log(result.status)
+            return result.json();
+        })
+        .then(function(data){
+            console.log(data)
+
+            // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
+            if (data.message.body.track_list[0]) {
+                const mmReturn = data.message.body.track_list[0].track.track_name;
 
 
 // -----------------api call functionality-------------
@@ -190,29 +214,94 @@ let callFn = function(input){
                 return result.json();
             })
             .then(function(data){
+
             
-                //-------populating content onto cards--------
-                for (let index = 0; index < 5; index++) {
-                    const cardArtistClass = document.querySelectorAll(".artist-name");
-                    const cardTitleClass = document.querySelectorAll(".song-name");
-                    const cardPicAClass = document.querySelectorAll(".song-url");
-                    const cardPicClass = document.querySelectorAll(".album-cover");
+                const mmReturnTrimmed = wordFn(mmReturn);
+                console.log(mmReturnTrimmed);
+                
+                fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
+                    headers:{
+                        //---------!!this code is only good for a few hours!!-------------
+                        //---------post? client id: client secret to spotify and they send back bearer number?
+                        Authorization: "Bearer " + hashToken
+                    }
+                })
+                .then(function(result){
+                    console.log(result.status);
+                    if(result.status===401){
+                        authFn();
+                    }
+                    return result.json();
+                })
+                .then(function(data){
+                
+                    //-------populating content onto cards--------
+                    for (let index = 0; index < 5; index++) {
+                        const cardArtistClass = document.querySelectorAll(".artist-name");
+                        const cardTitleClass = document.querySelectorAll(".song-name");
+                        const cardPicAClass = document.querySelectorAll(".song-url");
+                        const cardPicClass = document.querySelectorAll(".album-cover");
 
-                    const tracksList = data.tracks.items;
+                        const tracksList = data.tracks.items;
 
-                    cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                    cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                    console.log(tracksList[index].artists[0].name)
-                    cardTitleClass[index].textContent = tracksList[index].name;
-                    cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
-                }
-        }) 
+                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                        cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                        console.log(tracksList[index].artists[0].name)
+                        cardTitleClass[index].textContent = tracksList[index].name;
+                        cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
+                    }
+            }) 
 
-        } else {
-            toggleModal();
-        }
-    })
-}
+            } else {
+                toggleModal();
+            }
+        })
+    }
+  
+let dropChoice = document.getElementById("myDropdown")
+console.log(dropChoice);
+// let text = 
+
+// console.log(text);    
+
+    function spotifyAPI(query, category){
+        console.log(query, "212");
+        console.log(category, "213");
+        fetch("https://api.spotify.com/v1/search?q=" + query + "&type=" + category,{
+                    headers:{
+                        //---------!!this code is only good for a few hours!!-------------
+                        //---------post? client id: client secret to spotify and they send back bearer number?
+                        Authorization: "Bearer " + hashToken
+                    }
+                })
+                .then(function(result){
+                    console.log(result.status);
+                    if(result.status===401){
+                        authFn();
+                    }
+                    return result.json();
+                })
+                .then(function(data){
+                
+                    //-------populating content onto cards--------
+                    for (let index = 0; index < 5; index++) {
+                        const cardArtistClass = document.querySelectorAll(".artist-name");
+                        const cardTitleClass = document.querySelectorAll(".song-name");
+                        const cardPicAClass = document.querySelectorAll(".song-url");
+                        const cardPicClass = document.querySelectorAll(".album-cover");
+
+                        const tracksList = data.tracks.items;
+
+                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                        cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                        console.log(tracksList[index].artists[0].name)
+                        cardTitleClass[index].textContent = tracksList[index].name;
+                        cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
+                    }
+            }) 
+    }
+
+
 
 // ----------search button functionality----------------
 let cardSwitch = 0;
@@ -221,8 +310,15 @@ searchBtn.addEventListener("click", function(){
         cardPrint();
         cardSwitch = 1;
     }
-    callFn(searchInput.value);
+    if (text === "lyrics") {
+        callFn(searchInput.value);
+    } else {
+            let spotifyInput = searchInput.value;
+            console.log(spotifyInput);
+            spotifyAPI(spotifyInput, text);
+    }
     searchInput.value = "";
+
 });
 
 
