@@ -1,11 +1,19 @@
+const introModal = document.querySelector("#introModal");
+const introModalContent = document.querySelector("#introModalContent");
+const introCloseBtn = document.querySelector("#introCloseBtn");
+const authLinkBtn = document.querySelector("#authLinkBtn");
+
 const searchInput = document.querySelector("#wordInput");
 const searchBtn = document.querySelector("#btn");
 
 const cardDivClass = document.querySelector("#card-row");
-// const cardTitleClass = document.querySelectorAll("#");
-// const cardAlbumClass = document.querySelectorAll("#");
-// const cardUrlClass = document.querySelectorAll("#");
-// const cardPicClass = document.querySelectorAll("#");
+
+
+// variables declared and given value for no promise returned modal
+const modal = document.querySelector(".modal");
+// const trigger = document.querySelector(".trigger");
+const closeButton = document.querySelector(".close-button");
+
 
 let cardWrap;
 let cardArtist;
@@ -51,20 +59,84 @@ function myFunction() {
     wordInput.placeholder = choices
   }
 
+// --------------spotify log in redirect---------------
 const authFn = function(){
     window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=http://127.0.0.1:5500/index.html";
     return
 };
 
-console.log(window.location.hash.substr(1).split("="));
+// ------------------modal/log in functionality-----------------
+introModal.addEventListener("click", function(event){
+    if(event.target === authLinkBtn){
+        //bug on reload page starts over and modal is back...
+        introModal.setAttribute("style", "display: none");
+        introModalContent.setAttribute("style", "display:none");
+        authFn();
+    } else if (event.target === introCloseBtn){
+        introModal.setAttribute("style", "display: none");
+        introModalContent.setAttribute("style", "display:none");
+    }
+    
+});
+
+//-------if you have a token it will not show you the modal--------------
+if(window.location.hash){
+    introModal.setAttribute("style", "display: none");
+    introModalContent.setAttribute("style", "display:none");
+    console.log(window.location.hash)
+}
+
+// ------------parsing hash fragment & defining bearer token------------
+// console.log(window.location.hash.substr(1).split("="));
 const hashParce = window.location.hash.substr(1).split("=");
 const hashToken = hashParce[1];
-console.log(hashToken);
+// console.log(hashToken);
 
+// makes modal toggle between being hidden or shown
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
 
+// when click on the window instead of modal, the toggle function is called to make modal hidden
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+// checks to see where the user clicks and calls functions appropriately to 
+// trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
 
+// --------printing card elements----------
+const cardPrint = function(){
+
+    for (let i = 0; i < 5; i++) {
+        cardWrap = document.createElement("li");
+        cardArtist = document.createElement("h3");
+        cardTitle = document.createElement("p");
+        cardPicA = document.createElement("a");
+        cardPic = document.createElement("img");
+
+        cardWrap.setAttribute("class", "card");
+        cardArtist.setAttribute("class", "artist-name");
+        cardTitle.setAttribute("class", "song-name");
+        cardPic.setAttribute("class", "album-cover");
+        cardPicA.setAttribute("class", "song-url");
+
+        cardPicA.appendChild(cardPic);
+        cardWrap.appendChild(cardPicA);
+        cardWrap.appendChild(cardArtist);
+        cardWrap.appendChild(cardTitle);
+        cardDivClass.appendChild(cardWrap);
+        
+    }
+}
+
+// -----------------api call functionality-------------
 let callFn = function(input){
     let inputClean = input.trim("").replaceAll(" ", "+");
 
@@ -76,60 +148,62 @@ let callFn = function(input){
     })
     .then(function(data){
         console.log(data)
-        const mmReturn = data.message.body.track_list[0].track.track_name;
-        const mmReturnTrimmed = wordFn(mmReturn);
-        console.log(mmReturnTrimmed);
-    
-        fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
-            headers:{
-                //---------!!this code is only good for a few hours!!-------------
-                //---------post? client id: client secret to spotify and they send back bearer number?
-                Authorization: "Bearer " + hashToken
-            }
-        })
-        .then(function(result){
-            if(result.status===401){
-                authFn();
-            }
-            return result.json();
-        })
-        .then(function(data){
 
-            //-------printing cards--------
-            for (let index = 0; index < 5; index++) {
-                const tracksList = data.tracks.items;
+        // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
+        if (data.message.body.track_list[0]) {
+            const mmReturn = data.message.body.track_list[0].track.track_name;
+        
+            const mmReturnTrimmed = wordFn(mmReturn);
+            console.log(mmReturnTrimmed);
+            
+            fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
+                headers:{
+                    //---------!!this code is only good for a few hours!!-------------
+                    //---------post? client id: client secret to spotify and they send back bearer number?
+                    Authorization: "Bearer " + hashToken
+                }
+            })
+            .then(function(result){
+                console.log(result.status);
+                if(result.status===401){
+                    authFn();
+                }
+                return result.json();
+            })
+            .then(function(data){
+            
+                //-------populating content onto cards--------
+                for (let index = 0; index < 5; index++) {
+                    const cardArtistClass = document.querySelectorAll(".artist-name");
+                    const cardTitleClass = document.querySelectorAll(".song-name");
+                    const cardPicAClass = document.querySelectorAll(".song-url");
+                    const cardPicClass = document.querySelectorAll(".album-cover");
 
-                let cardWrap = document.createElement("li");
-                let cardArtist = document.createElement("h3");
-                let cardTitle = document.createElement("p");
-                let cardPicA = document.createElement("a");
-                let cardPic = document.createElement("img");
+                    const tracksList = data.tracks.items;
 
-                cardWrap.setAttribute("class", "card");
-                cardArtist.setAttribute("class", "artist-name");
-                cardTitle.setAttribute("class", "song-name");
-                // cardPicA.setAttribute("class", "");
-                cardPicA.setAttribute("href", tracksList[index].external_urls.spotify);
-                cardPic.setAttribute("class", "album-cover");
-                
-                cardArtist.textContent = tracksList[index].artists[0].name;
-                console.log(tracksList[index].artists[0].name)
-                cardTitle.textContent = tracksList[index].name;
-                cardPic.setAttribute("src", tracksList[index].album.images[0].url);
-                
-                cardPicA.appendChild(cardPic);
-                cardWrap.appendChild(cardPicA);
-                cardWrap.appendChild(cardArtist);
-                cardWrap.appendChild(cardTitle);
-                cardDivClass.appendChild(cardWrap);
-                
-            }
+                    cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                    cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                    console.log(tracksList[index].artists[0].name)
+                    cardTitleClass[index].textContent = tracksList[index].name;
+                    cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
+                }
+        }) 
+
+        } else {
+            toggleModal();
+        }
     })
-})
 }
 
-console.log(searchBtn);
+// ----------search button functionality----------------
+let cardSwitch = 0;
 searchBtn.addEventListener("click", function(){
+    if(cardSwitch===0){
+        cardPrint();
+        cardSwitch = 1;
+    }
     callFn(searchInput.value);
     searchInput.value = "";
 });
+
+

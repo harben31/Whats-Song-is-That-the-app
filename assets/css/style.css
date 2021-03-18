@@ -8,11 +8,71 @@
   --pink:#ec9adf;
   --blue1:#acd6f8e5;
   --blue2: #4eadfae5;
+}
 
+  /* ---------log in modal style----------- */
+  #introModal{
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    left: 0;
+    /* opacity: 0; */
+    position: fixed;
+    top: 0;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s; 
+    /* visibility: hidden; */
+    width: 100%;
+  }
+
+  #introModalContent{
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    left: 50%;
+    padding: 1rem 1.5rem;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24rem;
+  }
+
+  #introModalHeaderWrap{
+    display: flex;
+    justify-items: flex-end;
+  }
+
+#introModalBanner{
+  color: var(--black);
+}
+
+#introCloseBtn{
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#authLinkBtn{
+  background: var(--violet-web);
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  height: 45px;
+  margin: 13px 0;
+  width: 85px;
+}
+
+#introModalLogo{
+  height: auto;
+  max-width: 125px;
 }
   
 header {
   height: 30vh;
+
 }
 
   #heading,
@@ -209,6 +269,7 @@ body {
   background-color: var(--blue2);
   padding: 0px;
 }
+
 .close-button:hover {
   background-color: var(--pink);
 }
@@ -219,6 +280,7 @@ body {
   transform: scale(1.0);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
+
 .error-message p{
   padding: 20px;
 }
@@ -227,24 +289,54 @@ img {
   width: 100%;
   height: auto;
 }
+
 .card-column{
   border:solid;
   margin: 30px 30px;
   width: 50%;
   border-radius: 1px; 
 }
+
 .card-column:hover{
   box-shadow: 5px 0px 8px  rgb(106, 157, 190),  0 0 8px  rgb(106, 157, 190) ;
-
 }
+
 .artist-name{
   padding: 10px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.801); 
   font-size: 20px;
 }
+
+.song-name{
+  color: rgba(128, 128, 128, 0.918);
+  font-size: 16px;
+  padding: 10px;
+}
+
+#logoWrap{
+  color: var(--white);
+  display: flex;
+  font-size: .8rem;
+  justify-content: center;
+  position:relative;
+  z-index: -1;
+}
+
+.footerLogo{
+  height: 40px;
+  margin: 15px 10px;
+  width:auto;
+}
+
+.artist-name{
+  padding: 10px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.801); 
+  font-size: 20px;
+}
+
 .song-name{
   padding: 10px;
   font-size: 16px;
   color: rgba(128, 128, 128, 0.918);
 }
-  
+
