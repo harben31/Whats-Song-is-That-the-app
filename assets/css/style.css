@@ -1,17 +1,19 @@
-  :root {
-    --violet-web: #e22fcd;
-    --imperial-red: #FF0A3B;
-    --sea-green: #17C3B2;
-    --bluetiful: #4B72E7;
-    --black: #000000;
-    --white: #FFFFFF;
-  }
-  
-  header {
-    height: 30vh;
-  }
+:root {
+  --violet-web: #e22fcd;
+  --imperial-red: #FF0A3B;
+  --sea-green: #17C3B2;
+  --bluetiful: #4B72E7;
+  --black: #000000;
+  --white: #FFFFFF;
+  --pink:#ec9adf;
+  --blue1:#acd6f8e5;
+  --blue2: #4eadfae5;
 
+}
   
+header {
+  height: 30vh;
+}
 
   #heading,
   h3 {
@@ -40,12 +42,12 @@
     
   }
 
-  body {
-    background-image: url("../images/rainbow.jpg");
-    background-size: contain;
-    background-position: center;
-    background-attachment: fixed;
-  }
+body {
+  background-image: url("../images/rainbow.jpg");
+  background-size: contain;
+  background-position: center;
+  background-attachment: fixed;
+}
 
   /* #btnDiv {
     height: 8vh;
@@ -53,7 +55,7 @@
     width: 100vw;
   } */
   
-  #btn {
+#btn {
     /* position: absolute;
     /* left: 45%; */
     /* margin: auto 0;
@@ -162,3 +164,87 @@
     text-align: center;
     min-width: 15em;
    }
+
+/*Modal style*/
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+/*This style manage the position on the screen and sizing of the modal box*/
+.modal-content {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: -1rem 1.5rem;
+  width: 30rem;
+  border-radius: 0.5rem;
+}
+/*Styling the header of the modal*/
+.modal-header{
+  height: 4vh;
+  width: 100%;
+  background-color:var(--blue1);
+  border-radius: 0.5rem;
+  padding: 8px;
+  font-size: 18px;
+}
+/*Closeing button style*/
+.close-button {
+  float: right;
+  width: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: var(--blue2);
+  padding: 0px;
+}
+.close-button:hover {
+  background-color: var(--pink);
+}
+/*This class make the modal visible when we click on the button*/
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+.error-message p{
+  padding: 20px;
+}
+/*Cards Style*/
+img {
+  width: 100%;
+  height: auto;
+}
+.card-column{
+  border:solid;
+  margin: 30px 30px;
+  width: 50%;
+  border-radius: 1px; 
+}
+.card-column:hover{
+  box-shadow: 5px 0px 8px  rgb(106, 157, 190),  0 0 8px  rgb(106, 157, 190) ;
+
+}
+.artist-name{
+  padding: 10px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.801); 
+  font-size: 20px;
+}
+.song-name{
+  padding: 10px;
+  font-size: 16px;
+  color: rgba(128, 128, 128, 0.918);
+}
+  

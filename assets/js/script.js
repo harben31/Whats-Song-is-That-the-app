@@ -51,6 +51,19 @@ function myFunction() {
     wordInput.placeholder = choices
   }
 
+const authFn = function(){
+    window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=http://127.0.0.1:5500/index.html";
+    return
+};
+
+console.log(window.location.hash.substr(1).split("="));
+const hashParce = window.location.hash.substr(1).split("=");
+const hashToken = hashParce[1];
+console.log(hashToken);
+
+
+// console.log(authFn());
+
 
 let callFn = function(input){
     let inputClean = input.trim("").replaceAll(" ", "+");
@@ -71,10 +84,13 @@ let callFn = function(input){
             headers:{
                 //---------!!this code is only good for a few hours!!-------------
                 //---------post? client id: client secret to spotify and they send back bearer number?
-                Authorization: "Bearer BQA30tk-P1_Uks63qCpipu6H6mQNzQv-SoZ3yFHlp00-InyRTf9Fdchu3mXdJE4ydPLY2ZIW_tgPUe6rmhYwI6_EU5H0Q6zxIDxr4_jbbbIGCfLF8k13rcbWbXfh8HbErh-4Cpg45ZBfKg"
+                Authorization: "Bearer " + hashToken
             }
         })
         .then(function(result){
+            if(result.status===401){
+                authFn();
+            }
             return result.json();
         })
         .then(function(data){
@@ -117,10 +133,3 @@ searchBtn.addEventListener("click", function(){
     callFn(searchInput.value);
     searchInput.value = "";
 });
-
-
-
-
-
-
-
