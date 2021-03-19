@@ -128,7 +128,6 @@ closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
-
 // --------printing card elements----------
 const cardPrint = function(){
 
@@ -157,27 +156,26 @@ cardDivClass.innerHTML = "";
     }
 }
 
+
+    
+    //------save the cards to the local storage
+//     saveCard.push(cardWrap)
+//     console.log(saveCard);
+//     localStorage.setItem("cardsSearchList", JSON.stringify(saveCard));   
+// }
+// var cardsSearchList = JSON.parse(localStorage.getItem("cardsSearchList"));
+// console.log(cardsSearchList);
+
+// for (var i = 0; i < cardsSearchList.length; i++){
+//     var history = '<li>' + cardsSearchList[i] + '</li>';
+//     console.log(history);
+//     cardDivClass.append(history);
+// }
+
 //used to get text of drop down choice
 
 
-// cass_spotify
-    // // -----------------api call functionality-------------
-    // let callFn = function(input){
-    //     let inputClean = input.trim("").replaceAll(" ", "+");
 
-    //     //--------------musixmatch---------------------
-    //     fetch("https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=" + inputClean + "&apikey=4f4a8e76e3dfd131ac3519dbb669eec6")
-    //     .then(function(result){
-    //         console.log(result.status)
-    //         return result.json();
-    //     })
-    //     .then(function(data){
-    //         console.log(data)
-
-    //         // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
-    //         if (data.message.body.track_list[0]) {
-    //             const mmReturn = data.message.body.track_list[0].track.track_name;
-    // }
 
 // -----------------api call functionality-------------
 let callFn = function(input){
@@ -198,26 +196,6 @@ let callFn = function(input){
         
             const mmReturnTrimmed = wordFn(mmReturn);
             console.log(mmReturnTrimmed);
-            
-            fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
-                headers:{
-                    //---------!!this code is only good for a few hours!!-------------
-                    //---------post? client id: client secret to spotify and they send back bearer number?
-                    Authorization: "Bearer " + hashToken
-                }
-            })
-            .then(function(result){
-                console.log(result.status);
-                if(result.status===401){
-                    authFn();
-                }
-                return result.json();
-            })
-            .then(function(data){
-
-            
-                const mmReturnTrimmed = wordFn(mmReturn);
-                console.log(mmReturnTrimmed);
                 
                 fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
                     headers:{
@@ -237,20 +215,44 @@ let callFn = function(input){
                 
                     //-------populating content onto cards--------
                     for (let index = 0; index < 5; index++) {
-                        cardArtistClass = document.querySelectorAll(".artist-name");
-                        cardTitleClass = document.querySelectorAll(".song-name");
-                        cardPicAClass = document.querySelectorAll(".song-url");
-                        cardPicClass = document.querySelectorAll(".album-cover");
-
                         tracksList = data.tracks.items;
 
-                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                        cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                        console.log(tracksList[index].artists[0].name)
-                        cardTitleClass[index].textContent = tracksList[index].name;
-                        cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
+                        if (tracksList[index].external_urls.spotify && tracksList[index].artists[0].name && tracksList[index].name && tracksList[index].album.images[0].url) {
+                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                            cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                            console.log(tracksList[index].artists[0].name)
+                            cardTitleClass[index].textContent = tracksList[index].name;
+                            cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
                 
+                            cardWrap = document.createElement("li");
+                            cardArtist = document.createElement("h3");
+                            cardTitle = document.createElement("p");
+                            cardPicA = document.createElement("a");
+                            cardPic = document.createElement("img");
+                    
+                            cardWrap.setAttribute("class", "card");
+                            cardArtist.setAttribute("class", "artist-name");
+                            cardTitle.setAttribute("class", "song-name");
+                            cardPic.setAttribute("class", "album-cover");
+                            cardPicA.setAttribute("class", "song-url");
+                    
+                            cardPicA.appendChild(cardPic);
+                            cardWrap.appendChild(cardPicA);
+                            cardWrap.appendChild(cardArtist);
+                            cardWrap.appendChild(cardTitle);
+                            cardDivClass.appendChild(cardWrap);
 
+                            cardArtistClass = document.querySelectorAll(".artist-name");
+                            cardTitleClass = document.querySelectorAll(".song-name");
+                            cardPicAClass = document.querySelectorAll(".song-url");
+                            cardPicClass = document.querySelectorAll(".album-cover");
+
+                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                            cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                            console.log(tracksList[index].artists[0].name)
+                            cardTitleClass[index].textContent = tracksList[index].name;
+                            cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);
+                      
                         //------Save the cards to the local storage------
                         var object = {
                             artistName:tracksList[index].artists[0].name,
@@ -262,12 +264,15 @@ let callFn = function(input){
                         console.log(saveMusixmatchCards);
                         //---This line to update the history it will make me get the most recent search history----
                         localStorage.setItem("cardsSearchList1", JSON.stringify([])); 
-                        localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards)); 
+                        localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));  
+                            
+                        }
+
                     }
                         
                 }) 
                        
-            }) 
+            
         } else {
                 toggleModal();
             }
@@ -275,10 +280,7 @@ let callFn = function(input){
 }
   
 let dropChoice = document.getElementById("myDropdown")
-console.log(dropChoice);
-// let text = 
-
-// console.log(text);    
+console.log(dropChoice);   
 
 function spotifyAPI(query, category){
     console.log(query, "274");
@@ -307,94 +309,151 @@ function spotifyAPI(query, category){
 
                 //-------populating content onto cards--------
                 for (let index = 0; index < 5; index++) {
-                    cardArtistClass = document.querySelectorAll(".artist-name");
-                    cardTitleClass = document.querySelectorAll(".song-name");
-                    cardPicAClass = document.querySelectorAll(".song-url");
-                    cardPicClass = document.querySelectorAll(".album-cover"); 
-
+                
                         tracksList = data.tracks.items;
 
-                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                        cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                        console.log(tracksList[index].artists[0].name)
-                        cardTitleClass[index].textContent = tracksList[index].name;
-                        cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);  
-
-                        //--------Local storage------
-                        var object = {
-                            artistName:tracksList[index].artists[0].name,
-                            songName:tracksList[index].name,
-                            url:tracksList[index].external_urls.spotify,
-                            image:tracksList[index].album.images[0].url
-                        }
-                        saveMusixmatchCards.push(object);
-                        console.log(saveMusixmatchCards);
-                        localStorage.setItem("cardsSearchList1", JSON.stringify([])); 
-                        localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards)); 
-                    }
+                        if (tracksList[index].external_urls.spotify && tracksList[index].artists[0].name && tracksList[index].name && tracksList[index].album.images[0].url) {
+                            cardWrap = document.createElement("li");
+                            cardArtist = document.createElement("h3");
+                            cardTitle = document.createElement("p");
+                            cardPicA = document.createElement("a");
+                            cardPic = document.createElement("img");
                     
-
-                //runs code if user chose to search by Artist
-                } else if (category === "artist") {
-                    console.log("searching artist");
+                            cardWrap.setAttribute("class", "card");
+                            cardArtist.setAttribute("class", "artist-name");
+                            cardTitle.setAttribute("class", "song-name");
+                            cardPic.setAttribute("class", "album-cover");
+                            cardPicA.setAttribute("class", "song-url");
                     
-                    for (let index = 0; index < 5; index++) {
-                        cardArtistClass = document.querySelectorAll(".artist-name");
-                        const cardTitleClass = document.querySelectorAll(".song-name");
-                        cardPicAClass = document.querySelectorAll(".song-url");
-                        cardPicClass = document.querySelectorAll(".album-cover"); 
+                            cardPicA.appendChild(cardPic);
+                            cardWrap.appendChild(cardPicA);
+                            cardWrap.appendChild(cardArtist);
+                            cardWrap.appendChild(cardTitle);
+                            cardDivClass.appendChild(cardWrap);
 
-                        tracksList = data.artists.items
+                            cardArtistClass = document.querySelectorAll(".artist-name");
+                            cardTitleClass = document.querySelectorAll(".song-name");
+                            cardPicAClass = document.querySelectorAll(".song-url");
+                            cardPicClass = document.querySelectorAll(".album-cover"); 
 
-                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                        cardArtistClass[index].textContent = tracksList[index].name;
-                        console.log(tracksList[index].name)
-                        cardTitleClass[index].textContent = tracksList[index].genres[0];
-                        cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
-
-                        //--------Local storage------
-                        var object = {
-                            artistName:tracksList[index].name,
-                            songName:tracksList[index].genres[0],
-                            url:tracksList[index].external_urls.spotify,
-                            image:tracksList[index].images[0].url
+                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                            cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                            console.log(tracksList[index].artists[0].name)
+                            cardTitleClass[index].textContent = tracksList[index].name;
+                            cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);  
+                          
+                            var object = {
+                              artistName: tracksList[index].artists[0].name,
+                              songname: tracksList[index].name,
+                              url: tracksList[index].external_urls.spotify,
+                              image: tracksList[index].album.images[0].url
+                            }
+                            saveMusixmatchCards.push(object);
+                            console.log(saveMusixmatchCards);
+                            localStorage.setItem("cardsSearchList1", JSON.stringify([]));
+                            localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards);
                         }
-                        saveMusixmatchCards.push(object);
-                        console.log(saveMusixmatchCards);
-                        localStorage.setItem("cardsSearchList1", JSON.stringify([])); 
-                        localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards)); 
-                    }
- 
-
-                //runs code if user chose to search by Album
-                } else {
-                    console.log("searching album");
-
-                    for (let index = 0; index < 5; index++) {
-                        cardArtistClass = document.querySelectorAll(".artist-name");
-                        const cardTitleClass = document.querySelectorAll(".song-name");
-                        cardPicAClass = document.querySelectorAll(".song-url");
-                        cardPicClass = document.querySelectorAll(".album-cover"); 
-
-                        tracksList = data.albums.items;
-
-                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                        cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                        console.log(tracksList[index].artists[0].name)
-                        cardTitleClass[index].textContent = tracksList[index].name;
-                        cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
+                    }  
+                    //runs code if user chose to search by Artist
+                    } else if (category === "artist") {
+                        console.log("searching artist");
                         
-                        //--------Local storage------
-                        var object = {
-                            artistName:tracksList[index].artists[0].name,
-                            songName:tracksList[index].name,
-                            url:tracksList[index].external_urls.spotify,
-                            image:tracksList[index].images[0].url
+                        for (let index = 0; index < 5; index++) {
+                            tracksList = data.artists.items
+
+                            if (tracksList[index].external_urls.spotify && tracksList[index].name && tracksList[index].genres[0] && tracksList[index].images[0].url) {
+                            
+                                cardWrap = document.createElement("li");
+                                cardArtist = document.createElement("h3");
+                                cardTitle = document.createElement("p");
+                                cardPicA = document.createElement("a");
+                                cardPic = document.createElement("img");
+                        
+                                cardWrap.setAttribute("class", "card");
+                                cardArtist.setAttribute("class", "artist-name");
+                                cardTitle.setAttribute("class", "song-name");
+                                cardPic.setAttribute("class", "album-cover");
+                                cardPicA.setAttribute("class", "song-url");
+                        
+                                cardPicA.appendChild(cardPic);
+                                cardWrap.appendChild(cardPicA);
+                                cardWrap.appendChild(cardArtist);
+                                cardWrap.appendChild(cardTitle);
+                                cardDivClass.appendChild(cardWrap);
+
+                                cardArtistClass = document.querySelectorAll(".artist-name");
+                                cardTitleClass = document.querySelectorAll(".song-name");
+                                cardPicAClass = document.querySelectorAll(".song-url");
+                                cardPicClass = document.querySelectorAll(".album-cover"); 
+
+                                cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                                cardArtistClass[index].textContent = tracksList[index].name;
+                                console.log(tracksList[index].name)
+                                cardTitleClass[index].textContent = tracksList[index].genres[0];
+                                cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
+                            
+                                var object = {
+                                  artistName: tracksList[index].name,
+                                  songName: tracksList[index].genres[0],
+                                  url: tracksList[index].external_urls.spotify,
+                                  image: tracksList[index].images[0].url
+                                }
+                                saveMusixmatchCards.push(object);
+                                console.log(saveMusixmatchCards);
+                                localStorage.setItem("cardsSearchList1", JSON.stringify([]));
+                                localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards);
+                            }
                         }
-                        saveMusixmatchCards.push(object);
-                        console.log(saveMusixmatchCards);
-                        localStorage.setItem("cardsSearchList1", JSON.stringify([])); 
-                        localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards)); 
+                    //runs code if user chose to search by Album
+                    } else {
+                        console.log("searching album");
+
+                        for (let index = 0; index < 5; index++) {
+                            tracksList = data.albums.items;
+
+                            if (tracksList[index].external_urls.spotify && tracksList[index].artists[0].name && tracksList[index].name && tracksList[index].images[0].url) {
+
+                                cardWrap = document.createElement("li");
+                                cardArtist = document.createElement("h3");
+                                cardTitle = document.createElement("p");
+                                cardPicA = document.createElement("a");
+                                cardPic = document.createElement("img");
+                        
+                                cardWrap.setAttribute("class", "card");
+                                cardArtist.setAttribute("class", "artist-name");
+                                cardTitle.setAttribute("class", "song-name");
+                                cardPic.setAttribute("class", "album-cover");
+                                cardPicA.setAttribute("class", "song-url");
+                        
+                                cardPicA.appendChild(cardPic);
+                                cardWrap.appendChild(cardPicA);
+                                cardWrap.appendChild(cardArtist);
+                                cardWrap.appendChild(cardTitle);
+                                cardDivClass.appendChild(cardWrap);
+
+                                cardArtistClass = document.querySelectorAll(".artist-name");
+                                cardTitleClass = document.querySelectorAll(".song-name");
+                                cardPicAClass = document.querySelectorAll(".song-url");
+                                cardPicClass = document.querySelectorAll(".album-cover"); 
+
+                                cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                                cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                                console.log(tracksList[index].artists[0].name)
+                                cardTitleClass[index].textContent = tracksList[index].name;
+                                cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
+                              
+                                var object = {
+                                  artistName: tracksList[index].artists[0].name,
+                                  songName: tracksList[index].name,
+                                  url: tracksList[index].external_urls.spotify,
+                                  image: tracksList[index[.images[0].url
+                                }
+                                saveMusixmatchCards.push(object);
+                              console.log(saveMusixmatchCards);
+                              localStorage.setItem("cardsSearchList1", JSON.stringify([]));
+                              localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards);
+                          }
+
                     }
  
                 }
@@ -407,8 +466,18 @@ function spotifyAPI(query, category){
 let cardSwitch = 0;
 searchBtn.addEventListener("click", function(){
     if(cardSwitch===0){
-        cardPrint();
+
         cardSwitch = 1;
+
+    }else{
+       
+        // let cardRow = document.getElementById("card-row").querySelectorAll(".card");
+        // console.log(cardRow);
+
+        document.querySelectorAll(".card").forEach(function(e) {
+            e.parentNode.removeChild(e);
+        })
+
     }
     if (text === "lyrics") {
         callFn(searchInput.value);
