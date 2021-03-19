@@ -42,8 +42,11 @@ let wordFn = function(word){
     console.log(wordTwo);
     return wordTwo
 }
+
 let spotifyInput = searchInput.value;
+
 var text;
+
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -63,13 +66,14 @@ function myFunction() {
       }
     } 
   }
-  function dropMenu(choices){
-      console.log(choices);
-     var wordInput = document.getElementById("wordInput")
-    wordInput.placeholder = choices
-    text = document.getElementById(choices).getAttribute("value")
-    // spotifyAPI(spotifyInput, text);
-  } 
+
+function dropMenu(choices){
+    console.log(choices);
+    var wordInput = document.getElementById("wordInput")
+wordInput.placeholder = choices
+text = document.getElementById(choices).getAttribute("value")
+// spotifyAPI(spotifyInput, text);
+} 
 
 // --------------spotify log in redirect---------------
 const authFn = function(){
@@ -122,32 +126,6 @@ closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
 // console.log(authFn());
 
-
-// --------printing card elements----------
-// const cardPrint = function(){
-
-//     for (let i = 0; i < 5; i++) {
-//         cardWrap = document.createElement("li");
-//         cardArtist = document.createElement("h3");
-//         cardTitle = document.createElement("p");
-//         cardPicA = document.createElement("a");
-//         cardPic = document.createElement("img");
-
-//         cardWrap.setAttribute("class", "card");
-//         cardArtist.setAttribute("class", "artist-name");
-//         cardTitle.setAttribute("class", "song-name");
-//         cardPic.setAttribute("class", "album-cover");
-//         cardPicA.setAttribute("class", "song-url");
-
-//         cardPicA.appendChild(cardPic);
-//         cardWrap.appendChild(cardPicA);
-//         cardWrap.appendChild(cardArtist);
-//         cardWrap.appendChild(cardTitle);
-//         cardDivClass.appendChild(cardWrap);
-        
-//     }
-
-
     
     //------save the cards to the local storage
 //     saveCard.push(cardWrap)
@@ -165,24 +143,7 @@ window.addEventListener("click", windowOnClick);
 //used to get text of drop down choice
 
 
-// cass_spotify
-    // // -----------------api call functionality-------------
-    // let callFn = function(input){
-    //     let inputClean = input.trim("").replaceAll(" ", "+");
 
-    //     //--------------musixmatch---------------------
-    //     fetch("https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=" + inputClean + "&apikey=4f4a8e76e3dfd131ac3519dbb669eec6")
-    //     .then(function(result){
-    //         console.log(result.status)
-    //         return result.json();
-    //     })
-    //     .then(function(data){
-    //         console.log(data)
-
-    //         // checks to see if a promise was returned or not. If it is, runs code. If it isn't, calls toggleModal function
-    //         if (data.message.body.track_list[0]) {
-    //             const mmReturn = data.message.body.track_list[0].track.track_name;
-    // }
 
 // -----------------api call functionality-------------
 let callFn = function(input){
@@ -203,26 +164,6 @@ let callFn = function(input){
         
             const mmReturnTrimmed = wordFn(mmReturn);
             console.log(mmReturnTrimmed);
-            
-            fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
-                headers:{
-                    //---------!!this code is only good for a few hours!!-------------
-                    //---------post? client id: client secret to spotify and they send back bearer number?
-                    Authorization: "Bearer " + hashToken
-                }
-            })
-            .then(function(result){
-                console.log(result.status);
-                if(result.status===401){
-                    authFn();
-                }
-                return result.json();
-            })
-            .then(function(data){
-
-            
-                const mmReturnTrimmed = wordFn(mmReturn);
-                console.log(mmReturnTrimmed);
                 
                 fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
                     headers:{
@@ -288,32 +229,33 @@ let callFn = function(input){
 let dropChoice = document.getElementById("myDropdown")
 console.log(dropChoice);   
 
-    function spotifyAPI(query, category){
-        console.log(query, "274");
-        console.log(category, "275");
-       
-        fetch("https://api.spotify.com/v1/search?q=" + query + "&type=" + category,{
-                    headers:{
-                        //---------!!this code is only good for a few hours!!-------------
-                        //---------post? client id: client secret to spotify and they send back bearer number?
-                        Authorization: "Bearer " + hashToken
-                    }
-                })
-                .then(function(result){
-                    console.log(result.status);
-                    if(result.status===401){
-                        authFn();
-                    }
-                    return result.json();
-                })
-                .then(function(data){
-                    console.log(data, "286");
-                    
-                    //runs code if the user chose to search by Song Title
-                    if (category === "track") {
-                        console.log("searching track");
-                    //-------populating content onto cards--------
-                    for (let index = 0; index < 5; index++) {
+function spotifyAPI(query, category){
+    console.log(query, "274");
+    console.log(category, "275");
+    
+    fetch("https://api.spotify.com/v1/search?q=" + query + "&type=" + category,{
+                headers:{
+                    //---------!!this code is only good for a few hours!!-------------
+                    //---------post? client id: client secret to spotify and they send back bearer number?
+                    Authorization: "Bearer " + hashToken
+                }
+            })
+            .then(function(result){
+                console.log(result.status);
+                if(result.status===401){
+                    authFn();
+                }
+                return result.json();
+            })
+            .then(function(data){
+                console.log(data, "286");
+                
+                //runs code if the user chose to search by Song Title
+                if (category === "track") {
+                    console.log("searching track");
+                //-------populating content onto cards--------
+                for (let index = 0; index < 5; index++) {
+                
                         tracksList = data.tracks.items;
                         
                         if (tracksList[index].external_urls.spotify && tracksList[index].artists[0].name && tracksList[index].name && tracksList[index].album.images[0].url) {
@@ -425,10 +367,10 @@ console.log(dropChoice);
                                 cardTitleClass[index].textContent = tracksList[index].name;
                                 cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
                             }
-                        }
                     }
-                })
-            }
+                }
+            })
+        }
 
 
 
