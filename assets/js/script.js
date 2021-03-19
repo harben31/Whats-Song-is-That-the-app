@@ -3,8 +3,12 @@ const introModalContent = document.querySelector("#introModalContent");
 const introCloseBtn = document.querySelector("#introCloseBtn");
 const authLinkBtn = document.querySelector("#authLinkBtn");
 
+const header = document.querySelector("header")
 const searchInput = document.querySelector("#wordInput");
 const searchBtn = document.querySelector("#btn");
+
+const dropBtn = document.querySelector(".dropbtn");
+const dropItems = document.querySelectorAll(".dropItems");
 
 
 const cardDivClass = document.querySelector("#card-row");
@@ -47,35 +51,8 @@ let wordFn = function(word){
 
 let spotifyInput = searchInput.value;
 
-var text;
+let catText;
 
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
-  
-  // Close the dropdown menu if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    } 
-  }
-
-function dropMenu(choices){
-    console.log(choices);
-    var wordInput = document.getElementById("wordInput")
-wordInput.placeholder = choices
-text = document.getElementById(choices).getAttribute("value")
-// spotifyAPI(spotifyInput, text);
-} 
 
 // --------------spotify log in redirect---------------
 const authFn = function(){
@@ -199,8 +176,6 @@ let callFn = function(input){
                 
                 fetch("https://api.spotify.com/v1/search?q=" + mmReturnTrimmed + "&type=track",{
                     headers:{
-                        //---------!!this code is only good for a few hours!!-------------
-                        //---------post? client id: client secret to spotify and they send back bearer number?
                         Authorization: "Bearer " + hashToken
                     }
                 })
@@ -270,16 +245,16 @@ let callFn = function(input){
 
                     }
                         
-                }) 
-                       
+                })                        
             
         } else {
+
                 toggleModal();
             }
     })
 }
   
-let dropChoice = document.getElementById("myDropdown")
+let dropChoice = document.getElementById("myDropdown");
 console.log(dropChoice);   
 
 function spotifyAPI(query, category){
@@ -288,8 +263,6 @@ function spotifyAPI(query, category){
     
     fetch("https://api.spotify.com/v1/search?q=" + query + "&type=" + category,{
                 headers:{
-                    //---------!!this code is only good for a few hours!!-------------
-                    //---------post? client id: client secret to spotify and they send back bearer number?
                     Authorization: "Bearer " + hashToken
                 }
             })
@@ -464,29 +437,30 @@ function spotifyAPI(query, category){
 
 // ----------search button functionality----------------
 let cardSwitch = 0;
-searchBtn.addEventListener("click", function(){
-    if(cardSwitch===0){
-
-        cardSwitch = 1;
-
-    }else{
-       
-        // let cardRow = document.getElementById("card-row").querySelectorAll(".card");
-        // console.log(cardRow);
-
-        document.querySelectorAll(".card").forEach(function(e) {
-            e.parentNode.removeChild(e);
-        })
-
+header.addEventListener("click", function(event){
+    const eTarget = event.target;
+    if(eTarget.matches("#btn")){
+        if(cardSwitch===0){
+            cardSwitch = 1;
+        }else{
+            // let cardRow = document.getElementById("card-row").querySelectorAll(".card");
+            // console.log(cardRow);
+            document.querySelectorAll(".card").forEach(function(e) {
+                e.parentNode.removeChild(e);
+            })
+        }
+        if (catText === "lyrics") {
+            callFn(searchInput.value);
+        } else {
+                let spotifyInput = searchInput.value;
+                spotifyAPI(spotifyInput, catText);
+        }
+        searchInput.value = "";
+    } else if(eTarget.matches(".dropItems")){
+        console.log(eTarget.getAttribute("value"));
+        catText = eTarget.getAttribute("value");
+        dropBtn.innerHTML = eTarget.textContent;
     }
-    if (text === "lyrics") {
-        callFn(searchInput.value);
-    } else {
-            let spotifyInput = searchInput.value;
-            spotifyAPI(spotifyInput, text);
-    }
-    searchInput.value = "";
-
 });
 
 //---------Getting the saved Cards from local storage------
@@ -521,4 +495,3 @@ searchBtn.addEventListener("click", function(){
         cardWrap.appendChild(cardTitle);
         cardDivClass.appendChild(cardWrap);        
     }
-
