@@ -242,18 +242,39 @@ let callFn = function(input){
                 
                     //-------populating content onto cards--------
                     for (let index = 0; index < 5; index++) {
-                        cardArtistClass = document.querySelectorAll(".artist-name");
-                        cardTitleClass = document.querySelectorAll(".song-name");
-                        cardPicAClass = document.querySelectorAll(".song-url");
-                        cardPicClass = document.querySelectorAll(".album-cover");
-
                         tracksList = data.tracks.items;
 
-                        cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                        cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                        console.log(tracksList[index].artists[0].name)
-                        cardTitleClass[index].textContent = tracksList[index].name;
-                        cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
+                        if (tracksList[index].external_urls.spotify && tracksList[index].artists[0].name && tracksList[index].name && tracksList[index].album.images[0].url) {
+
+                            cardWrap = document.createElement("li");
+                            cardArtist = document.createElement("h3");
+                            cardTitle = document.createElement("p");
+                            cardPicA = document.createElement("a");
+                            cardPic = document.createElement("img");
+                    
+                            cardWrap.setAttribute("class", "card");
+                            cardArtist.setAttribute("class", "artist-name");
+                            cardTitle.setAttribute("class", "song-name");
+                            cardPic.setAttribute("class", "album-cover");
+                            cardPicA.setAttribute("class", "song-url");
+                    
+                            cardPicA.appendChild(cardPic);
+                            cardWrap.appendChild(cardPicA);
+                            cardWrap.appendChild(cardArtist);
+                            cardWrap.appendChild(cardTitle);
+                            cardDivClass.appendChild(cardWrap);
+
+                            cardArtistClass = document.querySelectorAll(".artist-name");
+                            cardTitleClass = document.querySelectorAll(".song-name");
+                            cardPicAClass = document.querySelectorAll(".song-url");
+                            cardPicClass = document.querySelectorAll(".album-cover");
+
+                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                            cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                            console.log(tracksList[index].artists[0].name)
+                            cardTitleClass[index].textContent = tracksList[index].name;
+                            cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
+                        }
                     }
                 }) 
 
@@ -265,10 +286,7 @@ let callFn = function(input){
 }
   
 let dropChoice = document.getElementById("myDropdown")
-console.log(dropChoice);
-// let text = 
-
-// console.log(text);    
+console.log(dropChoice);   
 
     function spotifyAPI(query, category){
         console.log(query, "274");
@@ -317,13 +335,10 @@ console.log(dropChoice);
                             cardWrap.appendChild(cardTitle);
                             cardDivClass.appendChild(cardWrap);
 
-
-                        cardArtistClass = document.querySelectorAll(".artist-name");
-                        cardTitleClass = document.querySelectorAll(".song-name");
-                        cardPicAClass = document.querySelectorAll(".song-url");
-                        cardPicClass = document.querySelectorAll(".album-cover"); 
-
-                           
+                            cardArtistClass = document.querySelectorAll(".artist-name");
+                            cardTitleClass = document.querySelectorAll(".song-name");
+                            cardPicAClass = document.querySelectorAll(".song-url");
+                            cardPicClass = document.querySelectorAll(".album-cover"); 
 
                             cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
                             cardArtistClass[index].textContent = tracksList[index].artists[0].name;
@@ -359,18 +374,16 @@ console.log(dropChoice);
                                 cardWrap.appendChild(cardTitle);
                                 cardDivClass.appendChild(cardWrap);
 
-                            cardArtistClass = document.querySelectorAll(".artist-name");
-                            cardTitleClass = document.querySelectorAll(".song-name");
-                            cardPicAClass = document.querySelectorAll(".song-url");
-                            cardPicClass = document.querySelectorAll(".album-cover"); 
+                                cardArtistClass = document.querySelectorAll(".artist-name");
+                                cardTitleClass = document.querySelectorAll(".song-name");
+                                cardPicAClass = document.querySelectorAll(".song-url");
+                                cardPicClass = document.querySelectorAll(".album-cover"); 
 
-                            
-
-                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                            cardArtistClass[index].textContent = tracksList[index].name;
-                            console.log(tracksList[index].name)
-                            cardTitleClass[index].textContent = tracksList[index].genres[0];
-                            cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
+                                cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                                cardArtistClass[index].textContent = tracksList[index].name;
+                                console.log(tracksList[index].name)
+                                cardTitleClass[index].textContent = tracksList[index].genres[0];
+                                cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
                             
                             }
                         }
@@ -401,18 +414,16 @@ console.log(dropChoice);
                                 cardWrap.appendChild(cardTitle);
                                 cardDivClass.appendChild(cardWrap);
 
-                            cardArtistClass = document.querySelectorAll(".artist-name");
-                            cardTitleClass = document.querySelectorAll(".song-name");
-                            cardPicAClass = document.querySelectorAll(".song-url");
-                            cardPicClass = document.querySelectorAll(".album-cover"); 
+                                cardArtistClass = document.querySelectorAll(".artist-name");
+                                cardTitleClass = document.querySelectorAll(".song-name");
+                                cardPicAClass = document.querySelectorAll(".song-url");
+                                cardPicClass = document.querySelectorAll(".album-cover"); 
 
-                            
-
-                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                            cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                            console.log(tracksList[index].artists[0].name)
-                            cardTitleClass[index].textContent = tracksList[index].name;
-                            cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
+                                cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
+                                cardArtistClass[index].textContent = tracksList[index].artists[0].name;
+                                console.log(tracksList[index].artists[0].name)
+                                cardTitleClass[index].textContent = tracksList[index].name;
+                                cardPicClass[index].setAttribute("src", tracksList[index].images[0].url);
                             }
                         }
                     }
@@ -425,8 +436,18 @@ console.log(dropChoice);
 let cardSwitch = 0;
 searchBtn.addEventListener("click", function(){
     if(cardSwitch===0){
-        // cardPrint();
+
         cardSwitch = 1;
+
+    }else{
+       
+        // let cardRow = document.getElementById("card-row").querySelectorAll(".card");
+        // console.log(cardRow);
+
+        document.querySelectorAll(".card").forEach(function(e) {
+            e.parentNode.removeChild(e);
+        })
+
     }
     if (text === "lyrics") {
         callFn(searchInput.value);
