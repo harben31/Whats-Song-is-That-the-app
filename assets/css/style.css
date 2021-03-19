@@ -207,23 +207,24 @@ img {
   color: rgba(128, 128, 128, 0.918);
 }
 
-#card-row {
-  display: flex;
-  flex-wrap: wrap;
-  list-style:none;
-  justify-content: center;
-  }
-
-  .card {
-  border: 3px solid var(--violet-web);
-  border-radius: 10px;
-  width: 20%;
-  min-height: 10em;
-  background-color: darkturquoise;
-  margin: 1em;
-  text-align: center;
-  min-width: 15em;
-  }
+  #card-row {
+    display: flex;
+    flex-wrap: wrap;
+    list-style:none;
+    justify-content: center;
+   }
+  
+   .card {
+    border: 3px solid var(--violet-web);
+    border-radius: 10px;
+    width: 20%;
+    min-height: 10em;
+    background-color: darkturquoise;
+    opacity: 0.9;
+    margin: 1em;
+    text-align: center;
+    min-width: 15em;
+   }
 
 /*Modal style*/
 .modal {
