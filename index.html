@@ -33,14 +33,16 @@
                 Search by Lyrics, Artist, Song Title, or Album 
         </h3>
         <div id="inputDiv">
-            <input id="wordInput" type="text" size="40" placeholder="Choose Search Option"/>
+            <div id="inputWrap">
+                <input id="wordInput" type="text" size="40" placeholder="Choose Search Option"/>
+            </div>
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Search by...</button>
+                <button class="dropbtn">Search by...</button>
                 <div id="myDropdown" class="dropdown-content">
-                    <a onclick="dropMenu ('lyrics')" id="lyrics" value="lyrics" href="#">Lyrics</a>
-                    <a onclick="dropMenu ('artist')" id="artist" value="artist" href="#">Artist</a>
-                    <a onclick="dropMenu ('track')" id="track" value="track" href="#">Song Title</a>
-                    <a onclick="dropMenu ('album')" id="album" value="album" href="#">Album</a>
+                    <a class="dropItems" id="lyrics" value="lyrics" href="#">Lyrics</a>
+                    <a class="dropItems" id="artist" value="artist" href="#">Artist</a>
+                    <a class="dropItems" id="track" value="track" href="#">Song Title</a>
+                    <a class="dropItems" id="album" value="album" href="#">Album</a>
                 </div>
             </div>
             <button id="btn"></button>
