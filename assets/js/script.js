@@ -134,26 +134,7 @@ cardDivClass.innerHTML = "";
 }
 
 
-    
-    //------save the cards to the local storage
-//     saveCard.push(cardWrap)
-//     console.log(saveCard);
-//     localStorage.setItem("cardsSearchList", JSON.stringify(saveCard));   
-// }
-// var cardsSearchList = JSON.parse(localStorage.getItem("cardsSearchList"));
-// console.log(cardsSearchList);
-
-// for (var i = 0; i < cardsSearchList.length; i++){
-//     var history = '<li>' + cardsSearchList[i] + '</li>';
-//     console.log(history);
-//     cardDivClass.append(history);
-// }
-
 //used to get text of drop down choice
-
-
-
-
 // -----------------api call functionality-------------
 let callFn = function(input){
     let inputClean = input.trim("").replaceAll(" ", "+");
@@ -232,7 +213,7 @@ let callFn = function(input){
                         var object = {
                             artistName:tracksList[index].artists[0].name,
                             songName:tracksList[index].name,
-                            url:tracksList[index].external_urls.spotify,
+                            songUrl:tracksList[index].external_urls.spotify,
                             image:tracksList[index].album.images[0].url
                         }
                         saveMusixmatchCards.push(object);
@@ -318,13 +299,13 @@ function spotifyAPI(query, category){
                             var object = {
                               artistName: tracksList[index].artists[0].name,
                               songname: tracksList[index].name,
-                              url: tracksList[index].external_urls.spotify,
+                              songUrl: tracksList[index].external_urls.spotify,
                               image: tracksList[index].album.images[0].url
                             }
                             saveMusixmatchCards.push(object);
                             console.log(saveMusixmatchCards);
                             localStorage.setItem("cardsSearchList1", JSON.stringify([]));
-                            localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards);
+                            localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));
                         }
                     }  
                     //runs code if user chose to search by Artist
@@ -368,13 +349,13 @@ function spotifyAPI(query, category){
                                 var object = {
                                   artistName: tracksList[index].name,
                                   songName: tracksList[index].genres[0],
-                                  url: tracksList[index].external_urls.spotify,
+                                  songUrl: tracksList[index].external_urls.spotify,
                                   image: tracksList[index].images[0].url
                                 }
                                 saveMusixmatchCards.push(object);
                                 console.log(saveMusixmatchCards);
                                 localStorage.setItem("cardsSearchList1", JSON.stringify([]));
-                                localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards);
+                                localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));
                             }
                         }
                     //runs code if user chose to search by Album
@@ -418,13 +399,13 @@ function spotifyAPI(query, category){
                                 var object = {
                                   artistName: tracksList[index].artists[0].name,
                                   songName: tracksList[index].name,
-                                  url: tracksList[index].external_urls.spotify,
-                                  image: tracksList[index[.images[0].url
+                                  songUrl: tracksList[index].external_urls.spotify,
+                                  image: tracksList[index].images[0].url
                                 }
                                 saveMusixmatchCards.push(object);
                               console.log(saveMusixmatchCards);
                               localStorage.setItem("cardsSearchList1", JSON.stringify([]));
-                              localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards);
+                              localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));
                           }
 
                     }
@@ -483,7 +464,7 @@ header.addEventListener("click", function(event){
         cardPicA.setAttribute("class", "song-url");
         
         console.log(cardsSearchList1);
-        cardPicA.setAttribute("href", cardsSearchList1[i].url);
+        cardPicA.setAttribute("href", cardsSearchList1[i].songUrl);
         cardArtist.textContent = cardsSearchList1[i].artistName;
         console.log(cardsSearchList1[i])
         cardTitle.textContent = cardsSearchList1[i].songName;
