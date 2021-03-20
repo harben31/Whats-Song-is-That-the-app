@@ -72,6 +72,21 @@ header {
 height: 30vh;
 
 }
+.history{
+  color: var(--white);
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  font-size: 20px;
+  border-bottom: 2px solid;
+}
+
+#card-row-history {
+  display: flex;
+  flex-wrap: wrap;
+  list-style:none;
+  justify-content: center;
+}
 
 #heading,
 h3 {
@@ -240,7 +255,7 @@ img {
   margin: 1em;
   text-align: center;
   min-width: 15em;
-  z-index: -1;
+  
   }
 
 /*Modal style*/

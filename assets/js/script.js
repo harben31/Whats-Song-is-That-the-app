@@ -15,7 +15,8 @@ const cardDivClass = document.querySelector("#card-row");
 
 //------This array will have the search history----- Will change the name of this variable later-----
 let saveMusixmatchCards = [];
-
+const recentView = document.querySelector(".recent-view")
+const cardDivClassHistory = document.querySelector("#card-row-history");
 
 // variables declared and given value for no promise returned modal
 const modal = document.querySelector(".modal");
@@ -110,7 +111,7 @@ const cardPrint = function(){
 
 //------To delete the cards that getting generated when the local storage empty------
 cardDivClass.innerHTML = "";
-
+recentView.innerHTML = "";
     for (let i = 0; i < 5; i++) {
         cardWrap = document.createElement("li");
         cardArtist = document.createElement("h3");
@@ -174,12 +175,7 @@ let callFn = function(input){
                         tracksList = data.tracks.items;
 
                         if (tracksList[index].external_urls.spotify && tracksList[index].artists[0].name && tracksList[index].name && tracksList[index].album.images[0].url) {
-                            cardPicAClass[index].setAttribute("href", tracksList[index].external_urls.spotify);
-                            cardArtistClass[index].textContent = tracksList[index].artists[0].name;
-                            console.log(tracksList[index].artists[0].name)
-                            cardTitleClass[index].textContent = tracksList[index].name;
-                            cardPicClass[index].setAttribute("src", tracksList[index].album.images[0].url);    
-                
+                           
                             cardWrap = document.createElement("li");
                             cardArtist = document.createElement("h3");
                             cardTitle = document.createElement("p");
@@ -219,8 +215,9 @@ let callFn = function(input){
                         saveMusixmatchCards.push(object);
                         console.log(saveMusixmatchCards);
                         //---This line to update the history it will make me get the most recent search history----
-                        localStorage.setItem("cardsSearchList1", JSON.stringify([])); 
+                        //localStorage.setItem("cardsSearchList1", JSON.stringify([])); 
                         localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));  
+                        //saveMusixmatchCards.shift();
                             
                         }
 
@@ -304,8 +301,9 @@ function spotifyAPI(query, category){
                             }
                             saveMusixmatchCards.push(object);
                             console.log(saveMusixmatchCards);
-                            localStorage.setItem("cardsSearchList1", JSON.stringify([]));
+                            //localStorage.setItem("cardsSearchList1", JSON.stringify([]));
                             localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));
+                            //saveMusixmatchCards.shift();
                         }
                     }  
                     //runs code if user chose to search by Artist
@@ -354,8 +352,9 @@ function spotifyAPI(query, category){
                                 }
                                 saveMusixmatchCards.push(object);
                                 console.log(saveMusixmatchCards);
-                                localStorage.setItem("cardsSearchList1", JSON.stringify([]));
+                                //localStorage.setItem("cardsSearchList1", JSON.stringify([]));
                                 localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));
+                               // saveMusixmatchCards.shift();
                             }
                         }
                     //runs code if user chose to search by Album
@@ -404,8 +403,9 @@ function spotifyAPI(query, category){
                                 }
                                 saveMusixmatchCards.push(object);
                               console.log(saveMusixmatchCards);
-                              localStorage.setItem("cardsSearchList1", JSON.stringify([]));
+                              //localStorage.setItem("cardsSearchList1", JSON.stringify([]));
                               localStorage.setItem("cardsSearchList1", JSON.stringify(saveMusixmatchCards));
+                              //saveMusixmatchCards.shift();
                           }
 
                     }
@@ -423,12 +423,22 @@ header.addEventListener("click", function(event){
     if(eTarget.matches("#btn")){
         if(cardSwitch===0){
             cardSwitch = 1;
+            console.log("hello");
+            // document.querySelectorAll(".card").forEach(function(e) {
+            //     console.log(e);
+            //     e.parentNode.removeChild(e);
+                
+            // })
+            history();
+            document.querySelector("#card-row-history").innerHTML = "";
         }else{
             // let cardRow = document.getElementById("card-row").querySelectorAll(".card");
             // console.log(cardRow);
             document.querySelectorAll(".card").forEach(function(e) {
+
                 e.parentNode.removeChild(e);
             })
+            history();
         }
         if (catText === "lyrics") {
             callFn(searchInput.value);
@@ -437,20 +447,26 @@ header.addEventListener("click", function(event){
                 spotifyAPI(spotifyInput, catText);
         }
         searchInput.value = "";
+        //history();
     } else if(eTarget.matches(".dropItems")){
         console.log(eTarget.getAttribute("value"));
         catText = eTarget.getAttribute("value");
         dropBtn.innerHTML = eTarget.textContent;
     }
-});
 
+});
 //---------Getting the saved Cards from local storage------
 //---------The max result 20------------------
 
-    var cardsSearchList1 = JSON.parse(localStorage.getItem("cardsSearchList1")) || [];
-  
-    for (let i = 0; i < 20; i++) {
+var historyList = document.createElement("h2");
+historyList.setAttribute("class", "history");
+historyList.textContent = "Recent View";
+recentView.appendChild(historyList);
 
+function history() {
+    var cardsSearchList1 = JSON.parse(localStorage.getItem("cardsSearchList1")) || [];
+    for (let i = 0; i < cardsSearchList1.length; i++) {
+    
         cardWrap = document.createElement("li");
         cardArtist = document.createElement("h3");
         cardTitle = document.createElement("p");
@@ -474,5 +490,10 @@ header.addEventListener("click", function(event){
         cardWrap.appendChild(cardPicA);
         cardWrap.appendChild(cardArtist);
         cardWrap.appendChild(cardTitle);
-        cardDivClass.appendChild(cardWrap);        
+        cardDivClassHistory.appendChild(cardWrap); 
+        // if(i > 10){
+        // saveMusixmatchCards.shift();  
+        // }     
     }
+}
+history();
