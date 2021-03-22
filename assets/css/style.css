@@ -33,7 +33,7 @@
   text-align: center;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 24rem;
+  max-width: 24rem;
 }
 
 #introModalHeaderWrap{
@@ -269,6 +269,7 @@ header {
   text-align: center;
   min-width: 15em;
 }
+
 .artist-name{
   padding: 10px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.801); 
@@ -319,8 +320,45 @@ img {
 }
 
 .footerLogo{
+  display: flex;
   height: 40px;
   margin: 15px 10px;
   width:auto;
 }
 
+@media screen and (max-width: 615px){
+
+  #inputDiv{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    /* flex-wrap: wrap; */
+  }
+
+  .recent-view{
+    padding-top: 40px;
+    
+  }
+
+  #btn,
+  .dropdown {
+    margin: 15px 10px;
+  }
+
+  .modal-content{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 421px){
+  #introModalContent{
+    width: 80%;
+  }
+
+  footer{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+ 
+}
