@@ -51,11 +51,18 @@ let spotifyInput = searchInput.value;
 
 
 
-// --------------spotify log in redirect---------------
+// --------------spotify log in redirect for GH Pages---------------
 const authFn = function(){
     window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=https://harben31.github.io/project_1/";
     return
 };
+
+
+// --------------spotify log in redirect for Live Server---------------
+// const authFn = function(){
+//     window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=http://127.0.0.1:5500/index.html";
+//     return
+// };
 
 // ------------------modal/log in functionality-----------------
 introModal.addEventListener("click", function(event){

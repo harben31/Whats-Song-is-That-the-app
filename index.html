@@ -33,19 +33,19 @@
                 Search by Lyrics, Artist, Song Title, or Album 
         </h3>
         <div id="inputDiv">
-            <div id="inputWrap">
-                <input id="wordInput" type="text" size="40" placeholder="Choose Search Option"/>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Search by...</button>
-                <div id="myDropdown" class="dropdown-content">
-                    <a class="dropItems" id="lyrics" value="lyrics" href="#">Lyrics</a>
-                    <a class="dropItems" id="artist" value="artist" href="#">Artist</a>
-                    <a class="dropItems" id="track" value="track" href="#">Song Title</a>
-                    <a class="dropItems" id="album" value="album" href="#">Album</a>
+                <div id="inputWrap">
+                    <input id="wordInput" type="text" size="40" placeholder="Search here"/>
                 </div>
-            </div>
-            <button id="btn"></button>
+                <div class="dropdown">
+                    <button class="dropbtn">Search by...</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a class="dropItems" id="lyrics" value="lyrics" href="#">Lyrics</a>
+                        <a class="dropItems" id="artist" value="artist" href="#">Artist</a>
+                        <a class="dropItems" id="track" value="track" href="#">Song Title</a>
+                        <a class="dropItems" id="album" value="album" href="#">Album</a>
+                    </div>
+                </div>
+                <button id="btn"></button>
             
             <!--Modal-->
             <div id="myModal" class="modal">
@@ -58,7 +58,7 @@
                     <div class="error-message">
                        <p>Sorry we couldn't find the matches to what you entered!</p>
                     </div>
-              </div>
+                </div>
             </div>
         </div>
     </header>
@@ -66,7 +66,6 @@
     <main>
         
         <!-- unordered list contains the songs cards-->
-        <!-- add id to ul /bh -->
         <ul id="card-row" class="row">
             <!--cards go here and are generated in js-->
 
