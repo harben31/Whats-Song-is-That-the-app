@@ -9,7 +9,7 @@ const dropBtn = document.querySelector(".dropbtn");
 const dropItems = document.querySelectorAll(".dropItems");
 const cardDivClass = document.querySelector("#card-row");
 
-//------This array will have the search history----- Will change the name of this variable later-----
+//------This array will have the search history-----
 let saveMusixmatchCards = [];
 const recentView = document.querySelector(".recent-view")
 const cardDivClassHistory = document.querySelector("#card-row-history");
@@ -415,7 +415,6 @@ header.addEventListener("click", function(event){
 });
 
 //---------Getting the saved Cards from local storage------
-//---------The max result 20------------------
 
 var historyList = document.createElement("h2");
 historyList.setAttribute("class", "history");
