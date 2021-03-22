@@ -175,6 +175,7 @@ header {
   background-size: cover;
   border: 2px solid var(--violet-web);
   border-radius: 10px;
+  /* margin-bottom: 50px; */
   margin-left: 30px;
   width: 44px;
   height: 44px;
@@ -253,6 +254,7 @@ header {
   flex-wrap: wrap;
   list-style:none;
   justify-content: center;
+  padding-top: 100px;
 }
 
 .card-column:hover{
@@ -296,7 +298,8 @@ img {
 .history{
   color: var(--white);
   text-align: center;
-  padding: 10px;
+  padding: 40px 10px 10px 10px;
+  
   margin: 10px;
   font-size: 20px;
   border-bottom: 2px solid;
@@ -336,7 +339,7 @@ img {
   }
 
   .recent-view{
-    padding-top: 40px;
+    margin-top: 40px;
     
   }
 
