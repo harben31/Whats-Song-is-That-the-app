@@ -57,7 +57,7 @@ let catText;
 
 // --------------spotify log in redirect---------------
 const authFn = function(){
-    window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=http://127.0.0.1:5500/index.html";
+    window.location.href ="https://accounts.spotify.com/authorize?client_id=e41b33aec0144df7838949fe180f754a&response_type=token&redirect_uri=https://harben31.github.io/project_1/";
     return
 };
 
