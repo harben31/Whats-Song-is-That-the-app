@@ -13,6 +13,7 @@ Music application that gives you the ability to search for music by: Lyrics, Art
 * [Screenshot-to-deployed-application](#screenshot-to-deployed-application)
 * [License](#license)
 * [Possible-future-add-ons](#possible-future-add-ons)
+* [image_credit](#Image-credit)
 
 
 ## Project's aim
@@ -92,4 +93,5 @@ Project is created with:
 * Weekly radar for users music taste. 
 * upcoming live performances for the users saved artists. 
 
-
+## Image Credit
+<a href="https://www.freepik.com/vectors/music">Music vector created by macrovector - www.freepik.com</a>
